@@ -8,6 +8,8 @@ unsigned char collar_state = 0;
 #define VIB_PIN (1<<2)
 #define ALARM_PIN (1<<3) 
 
+ int choice;
+
 struct Dog{
     char name[20];
     float distance_from_home;
@@ -40,9 +42,44 @@ void update_collar_state(struct Dog *d){
     else collar_state = collar_state | ALARM_PIN;
 }
 
+void dog_status(struct Dog *d){
+    printf("\n\t\tChecking %s's Status...\n\n",d->name);
+
+    if(collar_state == 0){
+
+        printf("\t\t\t**NOTIFICATION**\n");
+        printf("%s is currently within the safe zone.\n", d->name);
+
+    }else{
+        if(collar_state & LED_PIN){
+
+        printf("\t\t\t**NOTIFICATION**\n");
+        printf("%s is currently within the safe zone but is close to the boundary.\n", d->name);
+        printf("...Warning light is already ON...\n\n");
+
+        }if(collar_state &(VIB_PIN | SPEAKER_PIN)){
+
+        printf("\t\t\tWARNING!!!*\n");
+        printf("%s is currently out of the safe zone!.\n", d->name);
+        printf("Correctional Vibration ACTIVATED. Mic Activated, Tap to speak.\n\n");
+
+        }
+        
+        {
+
+        printf("\t\t\tWARNING!!!*\n");
+        printf("%s is currently %f away from home!.\n", d->name, d->limit + 2.0);
+        printf("Alarm and GPS ACTIVATED. Press link to track.\n");
+        printf("__GPS__\n\n");
+
+
+        }
+    }
+
+}
 
 int main(){
- int choice;
+
 
  struct Dog my_dog;
 
@@ -56,7 +93,17 @@ int main(){
  printf("---> ");
 
  scanf("%d",&choice);
+
+ /*if(choice == 1){
+    printf("\n\tNice choice. Enter %s's distance and lets see what happens :-)\n");
+    printf("---> ");
+    scanf("%f",my_dog.distance_from_home);
+
+    
+ }*/
+
  update_collar_state(&my_dog);
+ dog_status(&my_dog);
  }
 
  printf("\n\t\t\tThank you for playing. Goodbye..\n\n");
