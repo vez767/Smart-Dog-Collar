@@ -13,6 +13,7 @@ struct Dog{
     float distance_from_home;
     float limit;
 };
+
 void setup_dog(struct Dog *d){
     printf("\t\tDOG INITIALS MENU\n\n");
 
@@ -29,8 +30,22 @@ void setup_dog(struct Dog *d){
 
     printf("\n\t\tBoundary confirmed. %s's tag is set to go...\n", d->name);
 }
+
+void update_collar_state(struct Dog *d){
+    collar_state = 0;
+
+    if(d->distance_from_home < (d->limit - 2.0))  collar_state = 0;
+    else if(d->distance_from_home >= (d->limit - 2.0) && d->distance_from_home < d->limit) collar_state =  LED_PIN;
+    else if(d->distance_from_home >= d->limit && d->distance_from_home < (d->limit + 2.0)) collar_state = VIB_PIN | SPEAKER_PIN;
+    else collar_state = collar_state | ALARM_PIN;
+}
+
+
 int main(){
  struct Dog my_dog;
+
  setup_dog(&my_dog);
+ update_collar_state(&my_dog);
+
  return 0;
 }
