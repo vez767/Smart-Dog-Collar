@@ -17,7 +17,7 @@ struct Dog{
 void setup_dog(struct Dog *d){
     printf("\t\tDOG INITIALS MENU\n\n");
 
-    printf("Enter pet's name :-)\n");
+    printf("Please enter pet's name :-)\n");
     printf("---> ");
     scanf("%s", d->name);
     printf("\n\t\tName save successful..\n\n");
@@ -42,10 +42,23 @@ void update_collar_state(struct Dog *d){
 
 
 int main(){
+ int choice;
+
  struct Dog my_dog;
 
+ while(1){
+ printf("\t\tWelcome to the Dog Tracker Similator\n\n");
  setup_dog(&my_dog);
- update_collar_state(&my_dog);
+ printf("\t\tBefore we track down your dog would you like to...\n\n");
+ printf("1. Simulate your dog's location manually\n \n\n\t or\n\n");
+ printf("2. Use random a distance\n");
+ printf("0. Exit(press 0 or any number above 2)\n");
+ printf("---> ");
 
+ scanf("%d",&choice);
+ update_collar_state(&my_dog);
+ }
+
+ printf("\n\t\t\tThank you for playing. Goodbye..\n\n");
  return 0;
 }
