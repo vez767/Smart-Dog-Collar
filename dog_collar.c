@@ -80,6 +80,19 @@ void dog_status(struct Dog *d){
 
 }
 
+void machine_state(unsigned char state){
+    printf("Dog collar state(8 bit):\t\t\t|Bits|(Note: N/F - No Function) \n");
+    printf("\t\t|[7]\t|[6]\t|[5]\t|[4]\t|[3]\t\t|[2]\t\t|[1]\t\t|[0]\n");
+    printf("\t\t|[NF]\t|[NF]\t|[NF]\t|[NF]\t|[ALARM]\t|[VIBRATION]\t|[SPEAKER]\t|[LED]\n");
+    printf("\nCollar state: ");
+
+    for(int i = 7; i>=0; i--){
+       int print_state = (state >> i) & 1;
+       printf("\t|  %d", print_state);
+    }
+    printf("\n\n");
+}
+
 int main(){
 
 
@@ -90,7 +103,7 @@ int main(){
  setup_dog(&my_dog);// fix made to prevent name input reoccurrence.
 
  while(1){
- printf("\n\tWelcome to the Dog Tracker Similator\n\n"); // Edit made to improve UX
+ printf("\n\n\t\t<<<<<< Welcome to the Dog Tracker Similator >>>>>>\n\n"); // Edit made to improve UX
  printf("\t\tBefore we track down your dog would you like to...\n\n");
  printf("1. Simulate your dog's location manually\n \n\t or\n");
  printf("2. Use random a distance\n");
@@ -127,6 +140,7 @@ int main(){
 
  update_collar_state(&my_dog);
  dog_status(&my_dog);
+ machine_state(collar_state);
 
  }
 
