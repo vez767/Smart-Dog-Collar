@@ -70,7 +70,7 @@ void dog_status(struct Dog *d){
         if(collar_state & ALARM_PIN){
 
         printf("\t\t\tWARNING!!!*\n");
-        printf("%s is currently %.2f away from home!.\n", d->name, d->limit + 2.0); // distance rounded up to 2 d.p
+        printf("%s is currently %.2f away from home!.\n", d->name, d->distance_from_home); //FIX: distance rounded up to 2 d.p and static distance corrected.
         printf("Alarm and GPS ACTIVATED. Press link to track.\n");
         printf("__GPS__\n\n");
 
@@ -87,13 +87,14 @@ int main(){
 
  srand(time(NULL));
 
+ setup_dog(&my_dog);// fix made to prevent name input reoccurrence.
+
  while(1){
  printf("\n\tWelcome to the Dog Tracker Similator\n\n"); // Edit made to improve UX
- setup_dog(&my_dog);
  printf("\t\tBefore we track down your dog would you like to...\n\n");
  printf("1. Simulate your dog's location manually\n \n\t or\n");
  printf("2. Use random a distance\n");
- printf("0. Exit(press 0 or any number above 2)\n");
+ printf("0. Exit(press 0 or any number above 2)\n\n");
  printf("---> ");
 
  scanf("%d",&choice);
@@ -122,12 +123,11 @@ int main(){
     printf("\n\t[RANDOM] %s's bearing is %.2f meters\n",my_dog.name, my_dog.distance_from_home);
 
     
- }
+ } else break;
 
  update_collar_state(&my_dog);
  dog_status(&my_dog);
 
- break;
  }
 
  printf("\n\t\t\tThank you for playing. Goodbye..\n\n");
