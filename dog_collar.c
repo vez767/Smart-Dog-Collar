@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h> // For rand() and srand()
+#include <time.h> // For time() - used to seed the generator
 
 unsigned char collar_state = 0;
 
@@ -68,7 +70,7 @@ void dog_status(struct Dog *d){
         if(collar_state & ALARM_PIN){
 
         printf("\t\t\tWARNING!!!*\n");
-        printf("%s is currently %f away from home!.\n", d->name, d->limit + 2.0);
+        printf("%s is currently %.2f away from home!.\n", d->name, d->limit + 2.0); // distance rounded up to 2 d.p
         printf("Alarm and GPS ACTIVATED. Press link to track.\n");
         printf("__GPS__\n\n");
 
@@ -83,11 +85,13 @@ int main(){
 
  struct Dog my_dog;
 
+ srand(time(NULL));
+
  while(1){
- printf("\t\tWelcome to the Dog Tracker Similator\n\n");
+ printf("\n\tWelcome to the Dog Tracker Similator\n\n"); // Edit made to improve UX
  setup_dog(&my_dog);
  printf("\t\tBefore we track down your dog would you like to...\n\n");
- printf("1. Simulate your dog's location manually\n \n\n\t or\n\n");
+ printf("1. Simulate your dog's location manually\n \n\t or\n");
  printf("2. Use random a distance\n");
  printf("0. Exit(press 0 or any number above 2)\n");
  printf("---> ");
@@ -95,9 +99,27 @@ int main(){
  scanf("%d",&choice);
 
  if(choice == 1){
+
     printf("\n\tNice choice. Enter %s's distance and lets see what happens :-)\n",my_dog.name);
     printf("---> ");
     scanf("%f",&my_dog.distance_from_home);
+
+ }else if(choice == 2){
+        /* This logic was developed with assistance from Gemini (Google, 2026)
+        Prompt: "Give me the syntax for generating a random float number within
+         a specific range (0 to limit + 5.0) for a dog collar simulation."
+        */
+
+
+    float random_scale = (float)rand() / (float)RAND_MAX;
+    
+    // 2. Scale to desired range (0 to limit + 5.0 for danger tests)
+    float max_test_distance = my_dog.limit + 5.0;
+    my_dog.distance_from_home = random_scale * max_test_distance;
+    
+    // Syntax for AI generated code ends here.
+
+    printf("\n\t[RANDOM] %s's bearing is %.2f meters\n",my_dog.name, my_dog.distance_from_home);
 
     
  }
