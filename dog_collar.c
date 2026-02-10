@@ -65,7 +65,7 @@ void dog_status(struct Dog *d){
 
         }
         
-        {
+        if(collar_state & ALARM_PIN){
 
         printf("\t\t\tWARNING!!!*\n");
         printf("%s is currently %f away from home!.\n", d->name, d->limit + 2.0);
@@ -94,16 +94,18 @@ int main(){
 
  scanf("%d",&choice);
 
- /*if(choice == 1){
-    printf("\n\tNice choice. Enter %s's distance and lets see what happens :-)\n");
+ if(choice == 1){
+    printf("\n\tNice choice. Enter %s's distance and lets see what happens :-)\n",my_dog.name);
     printf("---> ");
-    scanf("%f",my_dog.distance_from_home);
+    scanf("%f",&my_dog.distance_from_home);
 
     
- }*/
+ }
 
  update_collar_state(&my_dog);
  dog_status(&my_dog);
+
+ break;
  }
 
  printf("\n\t\t\tThank you for playing. Goodbye..\n\n");
