@@ -31,9 +31,10 @@ The system uses a single byte (`unsigned char`) to control all peripherals.
 | **4-7** | **N/F** | No Function (Reserved) |
 
 ## Limitations & Known Issues
-* **Input Handling:** The current version utilizes `scanf` for input. Entering non-numeric characters (e.g., letters or symbols) in the menu may cause an infinite loop. This is a known limitation of the current I/O implementation and will be addressed in the hardware integration phase (v2.0).
-* **Name Spacing:** The system currently uses `scanf` for data parsing, which delimits input by whitespace. Therefore, names must be single words (For Example: use Itadori_Yuji instead of Itadori Yuji). Future updates will implement `fgets` for robust string parsing.
+* **Menu Input:** The main menu currently utilizes `scanf` for integer selection. Entering non-numeric characters will cause the simulator to loop. (To be patched in v3.0).
 * **Distance Calculation:** Distances are currently linear (1D). Future versions will implement 2D (X, Y) coordinate tracking.
+
+* **NOTE:** The Dog Name input has been patched in v2.0 and now fully supports spaces and sanitizes input using a custom pointer driver.
 
 ## Attribution
 * **Random Number Logic:** The algorithm for generating random float values within a specific range was developed with assistance from Gemini (Google, 2026).
