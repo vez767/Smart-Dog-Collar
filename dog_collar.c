@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h> // For rand() and srand()
 #include <time.h> // For time() - used to seed the generator
 
@@ -23,7 +22,15 @@ void setup_dog(struct Dog *d){
 
     printf("Please enter pet's name :-)\n");
     printf("---> ");
-    scanf("%s", d->name);
+    
+    fgets(d->name, sizeof(d->name), stdin);
+    char *ptr = d->name;
+    while(*ptr != '\0'){
+        if(*ptr == '\n'){
+            *ptr ='\0';
+        }
+        ptr++;
+    }
     printf("\n\t\tName save successful..\n\n");
 
     printf("Set maximum boundary distance (meters)");
