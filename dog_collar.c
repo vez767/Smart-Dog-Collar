@@ -117,7 +117,7 @@ float get_distance(Location a, Location b){
     float h_dist = long_diff * 111000;
     float v_dist = lat_diff * 111000;
 
-    float dist = sqrt((lat_diff * lat_diff) + (long_diff * long_diff));
+    float dist = sqrt((v_dist * v_dist) + (h_dist * h_dist)); //FIX: 
 
     return dist;
 }
