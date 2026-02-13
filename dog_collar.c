@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> // For rand() and srand()
 #include <time.h> // For time() - used to seed the generator
+#include <math.h>
 
 unsigned char collar_state = 0;
 
@@ -11,10 +12,17 @@ unsigned char collar_state = 0;
 
  int choice;
 
+ typedef struct{
+    float lat;
+    float lon;
+ }Location;
+
 struct Dog{
     char name[20];
     float distance_from_home;
     float limit;
+    Location current_pos;
+    Location home;
 };
 
 void setup_dog(struct Dog *d){
@@ -33,17 +41,18 @@ void setup_dog(struct Dog *d){
     }
     printf("\n\t\tName save successful..\n\n");
 
-    printf("Set maximum boundary distance (meters)");
-    printf("---> ");
-    scanf("%f", &d->limit);
+   d->home.lat = 48.8584; // Eiffiel tower cordinates hardcoded for location datapacket demonstration
+   d->home.lon = 2.2945;
 
-    d->distance_from_home = 0.0;
+   d->current_pos = d->home; // Initialize Current Position (Start at home)
 
-    printf("\n\t\tBoundary confirmed. %s's tag is set to go...\n", d->name);
+   printf("GPS system initialized...\n");
+   printf("Home set to %.4f, %.4f",d->home.lat, d-> home.lon);
 }
 
 void update_collar_state(struct Dog *d){
     collar_state = 0;
+    
 
     if(d->distance_from_home < (d->limit - 2.0))  collar_state = 0;
     else if(d->distance_from_home >= (d->limit - 2.0) && d->distance_from_home < d->limit) collar_state =  LED_PIN;
@@ -98,6 +107,19 @@ void machine_state(unsigned char state){
        printf("\t|  %d", print_state);
     }
     printf("\n\n");
+}
+
+// function to calculate distances from longitude and latitude coordinates
+float get_distance(Location a, Location b){ 
+    float lat_diff = a.lat - b.lat;
+    float long_diff = a.lon - b.lon;
+
+    float h_dist = long_diff * 111000;
+    float v_dist = lat_diff * 111000;
+
+    float dist = sqrt((lat_diff * lat_diff) + (long_diff * long_diff));
+
+    return dist;
 }
 
 int main(){
