@@ -66,7 +66,7 @@
         if(collar_state & ALARM_PIN){
 
         printf("\t\t\tWARNING!!!*\n");
-        printf("%s is currently %.2f away from home!.\n", d->name, d->distance_from_home); //FIX: distance rounded up to 2 d.p and static distance corrected.
+        printf("%s is currently %.2f meters away from home!.\n", d->name, d->distance_from_home); //FIX: distance rounded up to 2 d.p and static distance corrected.
         printf("Alarm and GPS ACTIVATED. Press link to track.\n");
         printf("__GPS__\n\n");
 

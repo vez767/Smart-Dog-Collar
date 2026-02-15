@@ -24,9 +24,15 @@ int main(){
 
  if(choice == 1){
 
-    printf("\n\tNice choice. Enter %s's distance and lets see what happens :-)\n",my_dog.name);
-    printf("---> ");
-    scanf("%f",&my_dog.distance_from_home);
+    printf("\n\tNice choice. Enter %s's geospatial coordinates and let's see what happens :-)\n",my_dog.name);
+    printf("Here we go!\n\n");
+    printf("Latitude: ");
+    scanf("%f", &my_dog.current_pos.lat);
+
+    printf("Longitude: ");
+    scanf("%f", &my_dog.current_pos.lon);
+    my_dog.distance_from_home = get_distance(my_dog.home, my_dog.current_pos);
+    printf("%s's calculated distance from home is %.2f", my_dog.name, my_dog.distance_from_home);
 
  }else if(choice == 2){
         /* This logic was developed with assistance from Gemini (Google, 2026)
