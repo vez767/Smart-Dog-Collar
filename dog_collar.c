@@ -23,16 +23,39 @@ int main(){
  scanf("%d",&choice);
 
  if(choice == 1){
+   
+       /* This logic was developed with assistance from Gemini (Google, 2026)
+        Prompt: "Give me the syntax for limiting the user's geospaital input to a Micro-offset level from the specified base."
+        */
+  
+      float lat_offset, lon_offset;
 
-    printf("\n\tNice choice. Enter %s's geospatial coordinates and let's see what happens :-)\n",my_dog.name);
-    printf("Here we go!\n\n");
-    printf("Latitude: ");
-    scanf("%f", &my_dog.current_pos.lat);
+      printf("\n\t[GPS SIMULATOR] Fine-tuning local coordinates...\n");
+      printf("\tHome Base is at 51.38540 N, 0.54840 E (Kent Area)\n\n");
+        
+       // 1. LATITUDE INPUT
+      printf("\tLatitude (51.3854xx) - Enter the last 2 digits (e.g., 70): ");
+      scanf("%f", &lat_offset);
+        
+      // Engine Math: 51.3800 + (70 / 10000) = 51.3870
+      my_dog.current_pos.lat = 51.38540 + (lat_offset / 1000000.0);
 
-    printf("Longitude: ");
-    scanf("%f", &my_dog.current_pos.lon);
-    my_dog.distance_from_home = get_distance(my_dog.home, my_dog.current_pos);
-    printf("%s's calculated distance from home is %.2f", my_dog.name, my_dog.distance_from_home);
+      // 2. LONGITUDE INPUT
+      printf("\tLongitude (0.5484xx) - Enter the last 2 digits (e.g., 90): ");
+      scanf("%f", &lon_offset);
+        
+      // Engine Math: 0.5400 + (90 / 10000) = 0.5490
+      my_dog.current_pos.lon = 0.54840 + (lon_offset / 1000000.0);
+
+                                     /* Syntax for AI generated code ends here.*/
+
+
+
+      my_dog.distance_from_home = get_distance(my_dog.home, my_dog.current_pos);
+        
+      printf("\n\t%s's simulated coordinates: %.4f, %.4f\n", my_dog.name, my_dog.current_pos.lat, my_dog.current_pos.lon);
+      printf("\tCalculated distance from home: %.2f meters\n", my_dog.distance_from_home);
+    
 
  }else if(choice == 2){
         /* This logic was developed with assistance from Gemini (Google, 2026)

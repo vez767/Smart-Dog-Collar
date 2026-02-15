@@ -21,8 +21,8 @@
     }
     printf("\n\t\tName save successful..\n\n");
  
-   d->home.lat = 48.8584; // Eiffiel tower cordinates hardcoded for location datapacket demonstration
-   d->home.lon = 2.2945;
+   d->home.lat = 51.38540; // Gillingham cordinates hardcoded for location datapacket demonstration
+   d->home.lon =  0.54840;
 
    d->current_pos = d->home; // Initialize Current Position (Start at home)
 
