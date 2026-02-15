@@ -10,8 +10,12 @@ To simulate low-level hardware control logic without physical hardware. The prog
 * **Hardware Abstraction:** Simulates GPIO pin states using an 8-bit register (`unsigned char`)
 * **Bitwise State Monitoring:** Displays the real-time binary state of the collar for debugging.
 * **Simulation Modes:**
-    * **Manual Mode:** User inputs specific distances to test boundary conditions.
+    * **Manual Mode:** User inputs geospatial coordinates (latitude/longitude micro-offsets) to test boundary conditions and trigger the internal distance engine
     * **Random Mode:** Generates random distances to simulate unpredictable pet movement. 
+* **Modular Architecture:** Refactored the monolithic codebase into separated application (`dog_collar.c`) and driver (`my_functions.c`/`.h`) files.
+* **Geospatial Engine:** Implemented a custom Pythagorean distance calculator to convert raw latitude/longitude coordinates into real-world meters.
+* **Data Packets:** Organized GPS data into nested `Location` and `Dog` structs for memory-safe data transmission.
+* **Input Validation:** Constrained manual GPS input to a micro-offset grid (Kent area) to ensure realistic testing parameters.
 
 ## Technical Concepts Applied
 * **Bitwise Operations:** Using `&` (AND), `|` (OR), and `<<` (Left Shift) to mask and toggle specific bits.
@@ -31,10 +35,11 @@ The system uses a single byte (`unsigned char`) to control all peripherals.
 | **4-7** | **N/F** | No Function (Reserved) |
 
 ## Limitations & Known Issues
-* **Menu Input:** The main menu currently utilizes `scanf` for integer selection. Entering non-numeric characters will cause the simulator to loop. (To be patched in v3.0).
-* **Distance Calculation:** Distances are currently linear (1D). Future versions will implement 2D (X, Y) coordinate tracking.
+* **Menu Input Vulnerability:** The main menu currently utilizes `scanf` for integer selection (`1`, `2`, `0`). Entering non-numeric characters (like letters) will cause the simulator to loop infinitely. (Targeted for a future patch using `fgets` and `atoi`).
+* **Floating-Point Precision Loss:** The current engine uses standard `float` data types for coordinate math. Due to truncation errors during micro-offset division, calculated boundary distances may suffer from slight precision loss, making the effective safe zone marginally smaller than intended. (Can be patched in future versions by upgrading to `double` precision).
 
-* **NOTE:** The Dog Name input has been patched in v2.0 and now fully supports spaces and sanitizes input using a custom pointer driver.
+* **NOTE (v3.0 Update):** The simulator has been successfully refactored into a modular C architecture (`.c` and `.h` files). It now features a live geospatial engine that dynamically calculates distances using Pythagorean math and nested `Location` data packets, replacing the old manual distance inputs.
 
 ## Attribution
 * **Random Number Logic:** The algorithm for generating random float values within a specific range was developed with assistance from Gemini (Google, 2026).
+* **Micro-Offset Geofence Logic:** The mathematical concept and implementation for constraining user input to local, street-level coordinate offsets was developed with architectural assistance from Gemini (Google, 2026).
