@@ -5,6 +5,9 @@
 
 int main(){
  int choice;
+ char menu_buffer [10]; // buffer for menu input
+ char lat_buffer[20];
+ char long_buffer[20];
 
  struct Dog my_dog;
 
@@ -20,7 +23,10 @@ int main(){
  printf("0. Exit(press 0 or any number above 2)\n\n");
  printf("---> ");
 
- scanf("%d",&choice);
+ 
+ fgets(menu_buffer,sizeof(menu_buffer), stdin);
+
+ choice = atoi(menu_buffer);
 
  if(choice == 1){
    
@@ -35,14 +41,19 @@ int main(){
         
        // 1. LATITUDE INPUT
       printf("\tLatitude (51.3854xx) - Enter the last 2 digits (e.g., 70): ");
-      scanf("%f", &lat_offset);
+      fgets(lat_buffer,sizeof(lat_buffer), stdin);
+
+      lat_offset = atof(lat_buffer);
         
       // Engine Math: 51.3800 + (70 / 10000) = 51.3870
       my_dog.current_pos.lat = 51.38540 + (lat_offset / 1000000.0);
 
       // 2. LONGITUDE INPUT
       printf("\tLongitude (0.5484xx) - Enter the last 2 digits (e.g., 90): ");
-      scanf("%f", &lon_offset);
+
+      fgets(long_buffer,sizeof(long_buffer), stdin);
+
+      lon_offset = atof(long_buffer);
         
       // Engine Math: 0.5400 + (90 / 10000) = 0.5490
       my_dog.current_pos.lon = 0.54840 + (lon_offset / 1000000.0);

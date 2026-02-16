@@ -35,10 +35,10 @@ The system uses a single byte (`unsigned char`) to control all peripherals.
 | **4-7** | **N/F** | No Function (Reserved) |
 
 ## Limitations & Known Issues
-* **Menu Input Vulnerability:** The main menu currently utilizes `scanf` for integer selection (`1`, `2`, `0`). Entering non-numeric characters (like letters) will cause the simulator to loop infinitely. (Targeted for a future patch using `fgets` and `atoi`).
 * **Floating-Point Precision Loss:** The current engine uses standard `float` data types for coordinate math. Due to truncation errors during micro-offset division, calculated boundary distances may suffer from slight precision loss, making the effective safe zone marginally smaller than intended. (Can be patched in future versions by upgrading to `double` precision).
 
 * **NOTE (v3.0 Update):** The simulator has been successfully refactored into a modular C architecture (`.c` and `.h` files). It now features a live geospatial engine that dynamically calculates distances using Pythagorean math and nested `Location` data packets, replacing the old manual distance inputs.
+* **NOTE (v3.1 Update):** All vulnerable `scanf` functions have been replaced with memory-safe string parsing (`fgets`, `atoi`, and `atof`). This eliminates the terminal infinite-loop bug and fully stabilizes the simulation environment.
 
 ## Attribution
 * **Random Number Logic:** The algorithm for generating random float values within a specific range was developed with assistance from Gemini (Google, 2026).
