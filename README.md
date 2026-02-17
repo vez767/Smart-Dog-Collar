@@ -39,6 +39,7 @@ The system uses a single byte (`unsigned char`) to control all peripherals.
 
 * **NOTE (v3.0 Update):** The simulator has been successfully refactored into a modular C architecture (`.c` and `.h` files). It now features a live geospatial engine that dynamically calculates distances using Pythagorean math and nested `Location` data packets, replacing the old manual distance inputs.
 * **NOTE (v3.1 Update):** All vulnerable `scanf` functions have been replaced with memory-safe string parsing (`fgets`, `atoi`, and `atof`). This eliminates the terminal infinite-loop bug and fully stabilizes the simulation environment.
+* **NOTE (v4.0 Update):** Implemented a live NMEA string parsing engine using `strtok` and `atof`. The simulator can now successfully process raw simulated GPS satellite data (`$GPGGA`), extract floating-point coordinates, and dynamically trigger the Geofence boundary logic.
 
 ## Attribution
 * **Random Number Logic:** The algorithm for generating random float values within a specific range was developed with assistance from Gemini (Google, 2026).

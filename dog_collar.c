@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> // For rand() and srand()
+#include<string.h>
 #include <time.h> // For time() - used to seed the generator
 #include "my_functions.h"
 
@@ -20,6 +21,7 @@ int main(){
  printf("\t\tBefore we track down your dog would you like to...\n\n");
  printf("1. Simulate your dog's location manually\n \n\t or\n");
  printf("2. Use random a distance\n");
+ printf("3. Simulate Live Satelite Feed(NMEA Parse)\n");
  printf("0. Exit(press 0 or any number above 2)\n\n");
  printf("---> ");
 
@@ -86,7 +88,33 @@ int main(){
     printf("\n\t[RANDOM] %s's bearing is %.2f meters\n",my_dog.name, my_dog.distance_from_home);
 
     
- } else break;
+ } else if(choice == 3){
+
+  printf("Satelite ping recieved\n");
+
+  char nmea_sentence[] = "$GPGGA,123519,51.3870,N,0.5490,E,1,08";
+  printf("Raw NMEA sentence: %s", nmea_sentence);
+
+  int token_index = 0;
+
+  char *token = strtok(nmea_sentence, ",");
+
+  while(token != NULL){
+
+    if(token_index == 2) my_dog.current_pos.lat = atof(token);
+
+    else if(token_index == 4) my_dog.current_pos.lon = atof(token);
+
+   token = strtok(NULL, ","); 
+   token_index++;
+  }
+
+  my_dog.distance_from_home = get_distance(my_dog.home, my_dog.current_pos);
+        
+  printf("\n\t[PARSER SUCCESS] Coordinates extracted: %.4f, %.4f\n", my_dog.current_pos.lat, my_dog.current_pos.lon);
+  printf("\tCalculated distance from home: %.2f meters\n", my_dog.distance_from_home);
+
+ }else break;
 
  update_collar_state(&my_dog);
  dog_status(&my_dog);
